@@ -42,7 +42,7 @@
 .password-input {
   width: 80%;
   height: 30px;
-  background: #ffffff;
+  background-color: #ffffff;
   border: 1px solid #c3cad9;
   border-radius: 8px;
   font-family: 'Roboto';
@@ -85,4 +85,22 @@
   font-size: 14px;
   color: #ef4444;
   margin-top: 5px;
+}
+
+@media (max-width: 767px) {
+  .login-card {
+    flex-direction: column;
+    padding: 10px 0px 10px 0px;
+    background-color: #ffffff;
+  }
+  .login-image {
+    width: 250px;
+    height: 250px;
+    border-radius: 125px;
+  }
+  .form-el {
+    width: 90%;
+    margin-top: 30px;
+    background-color: transparent;
+  }
 }

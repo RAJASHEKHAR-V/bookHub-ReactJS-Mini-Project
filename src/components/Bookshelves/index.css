@@ -11,27 +11,17 @@
   justify-content: center;
   padding-top: 30px;
 }
-.mobile-filter-heading {
-  font-family: 'Roboto';
-  font-weight: 600;
-  font-size: 20px;
-  color: #334155;
-  display: none;
-}
 
 .filter-heading {
   font-family: 'Roboto';
   font-weight: 600;
   font-size: 20px;
   color: #334155;
-  display: none;
 }
+
 .filter-group-card {
   width: 20%;
   background-color: #ffffff;
-  list-style-type: none;
-  margin: 0px;
-  padding: 0px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -39,6 +29,16 @@
   padding-top: 30px;
 }
 
+.filter-card {
+  width: 100%;
+  list-style-type: none;
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
 .all-book-main-card {
   width: 60%;
   display: flex;
@@ -60,18 +60,6 @@
   font-weight: 600;
   font-size: 18px;
   color: #334155;
-  display: none;
-}
-
-.mobile-search-card {
-  width: 50%;
-  height: 30px;
-  display: none;
-  justify-content: space-between;
-  align-items: center;
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
-  border-radius: 4px;
 }
 
 .search-card {
@@ -158,22 +146,24 @@
   .filter-group-card {
     width: 90%;
     background-color: transparent;
+    align-items: flex-start;
+  }
+
+  .filter-card {
+    width: 100%;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
   }
 
   .all-book-main-card {
     width: 100%;
-  }
-  .mobile-filter-heading {
-    display: flex;
   }
 
   .book-status-card {
     width: 100%;
   }
 
-  .mobile-search-card {
+  .search-card {
     display: flex;
     width: 70%;
   }
@@ -188,27 +178,5 @@
 
   .no-books-found {
     font-size: 20px;
-  }
-}
-
-@media (min-width: 768px) {
-  .all-book-body {
-    width: 100%;
-    min-height: 90vh;
-    display: flex;
-    justify-content: center;
-    padding-top: 30px;
-  }
-
-  .filter-heading {
-    display: flex;
-  }
-
-  .book-status-heading {
-    display: flex;
-  }
-
-  .search-card {
-    display: flex;
   }
 }

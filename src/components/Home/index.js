@@ -4,6 +4,7 @@ import Loader from 'react-loader-spinner'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 import Slider from 'react-slick'
 
+import NavBarContext from '../../context/NavBarContext'
 import Header from '../Header'
 import Footer from '../Footer'
 import FailureView from '../FailureView'
@@ -71,59 +72,68 @@ class Home extends Component {
   }
 
   getRatedList = () => {
-    const {innerWidth} = this.state
-    const settings = {dots: false, slidesToShow: 4, slidesToScroll: 3}
+    const {topRatedList, apiStatus, innerWidth} = this.state
+    const settings = {dots: false, slidesToShow: 4, slidesToScroll: 4}
     const mobileSettings = {dots: false, slidesToShow: 2, slidesToScroll: 2}
     const AddSettings = innerWidth >= 768 ? settings : mobileSettings
-    console.log(window.innerWidth)
-    const {topRatedList, apiStatus} = this.state
-    const onFindButton = () => {
-      const {history} = this.props
-
-      history.replace('/shelf')
-    }
-
+    const {history} = this.props
     return (
-      <>
-        <h1 className="rated-book-heading">Find Your Next Favorite Books?</h1>
-        <p className="rated-book-para">
-          You are in the right place. Tell us what titles or genres you have
-          enjoyed in the past, and we will give you surprisingly insightful
-          recommendations.
-        </p>
-        <div className="top-rated-card">
-          <div className="top-rated-header">
-            <h1 className="rated-header-heading">Top Rated Books</h1>
-            <button
-              type="button"
-              className="find-books-button"
-              onClick={onFindButton}
-            >
-              Find Books
-            </button>
-          </div>
-          {apiStatus !== apiConstants.failure ? (
-            <ul className="slick-container slick-item">
-              <Slider {...AddSettings}>
-                {topRatedList.map(eachBook => (
-                  <li key={eachBook.id} className="each-rated-card">
-                    <img
-                      src={eachBook.coverPic}
-                      className="rated-book-image"
-                      alt={eachBook.title}
-                    />
-                    <h1 className="rated-book-title">{eachBook.title}</h1>
-                    <p className="rated-book-author">{eachBook.authorName}</p>
-                  </li>
-                ))}
-              </Slider>
-            </ul>
-          ) : (
-            <FailureView callApi={this.callRatedBookApi} />
-          )}
-        </div>
-        <Footer />
-      </>
+      <NavBarContext.Consumer>
+        {value => {
+          const {onClickOfNavBooks} = value
+          const onFindButton = () => {
+            history.replace('/shelf')
+            onClickOfNavBooks()
+          }
+
+          return (
+            <>
+              <h1 className="rated-book-heading">
+                Find Your Next Favorite Books?
+              </h1>
+              <p className="rated-book-para">
+                You are in the right place. Tell us what titles or genres you
+                have enjoyed in the past, and we will give you surprisingly
+                insightful recommendations.
+              </p>
+              <div className="top-rated-card">
+                <div className="top-rated-header">
+                  <h1 className="rated-header-heading">Top Rated Books</h1>
+                  <button
+                    type="button"
+                    className="find-books-button"
+                    onClick={onFindButton}
+                  >
+                    Find Books
+                  </button>
+                </div>
+                {apiStatus !== apiConstants.failure ? (
+                  <ul className="slick-container slick-item">
+                    <Slider {...AddSettings}>
+                      {topRatedList.map(eachBook => (
+                        <li key={eachBook.id} className="each-rated-card">
+                          <img
+                            src={eachBook.coverPic}
+                            className="rated-book-image"
+                            alt={eachBook.title}
+                          />
+                          <h1 className="rated-book-title">{eachBook.title}</h1>
+                          <p className="rated-book-author">
+                            {eachBook.authorName}
+                          </p>
+                        </li>
+                      ))}
+                    </Slider>
+                  </ul>
+                ) : (
+                  <FailureView callApi={this.callRatedBookApi} />
+                )}
+              </div>
+              <Footer />
+            </>
+          )
+        }}
+      </NavBarContext.Consumer>
     )
   }
 

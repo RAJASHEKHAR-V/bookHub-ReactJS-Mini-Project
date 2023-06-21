@@ -51,10 +51,20 @@ class Bookshelves extends Component {
     filterOption: bookshelvesList[0].value,
     searchText: '',
     apiStatus: apiConstants.initial,
+    innerWidth: window.innerWidth,
   }
 
   componentDidMount() {
+    window.addEventListener('resize', this.handleResize)
     this.callBookShelvesApi()
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
+  handleResize = () => {
+    this.setState({innerWidth: window.innerWidth})
   }
 
   updateAllBooks = books => {
@@ -115,62 +125,56 @@ class Bookshelves extends Component {
   }
 
   getBooks = () => {
-    const {allBooksList, apiStatus, filterOption, searchText} = this.state
+    const {
+      allBooksList,
+      apiStatus,
+      filterOption,
+      searchText,
+      innerWidth,
+    } = this.state
     const booksStatus = this.getStatus()
+
+    const responsiveCard = (
+      <div className="search-card">
+        <input
+          placeholder="Search"
+          type="search"
+          id="search-id"
+          className="search-input"
+          value={searchText}
+          onChange={this.onChangeOfSearchText}
+        />
+        <button
+          type="button"
+          className="search-button"
+          onClick={this.onClickOfSearchButton}
+          testid="searchButton"
+        >
+          <BsSearch className="search-icon" />
+        </button>
+      </div>
+    )
 
     return (
       <div className="all-book-body">
-        <div className="mobile-search-card">
-          <input
-            placeholder="Search"
-            type="search"
-            id="search-id"
-            className="search-input"
-            value={searchText}
-            onChange={this.onChangeOfSearchText}
-          />
-          <button
-            type="button"
-            className="search-button"
-            onClick={this.onClickOfSearchButton}
-            testid="searchButton"
-          >
-            <BsSearch className="search-icon" />
-          </button>
-        </div>
-        <h1 className="mobile-filter-heading">Bookshelves</h1>
-        <ul className="filter-group-card">
+        {innerWidth <= 767 && responsiveCard}
+        <div className="filter-group-card">
           <h1 className="filter-heading">Bookshelves</h1>
-          {bookshelvesList.map(eachItem => (
-            <FilterGroup
-              key={eachItem.id}
-              itemObject={eachItem}
-              isActive={eachItem.value === filterOption}
-              onLabel={this.onLabel}
-            />
-          ))}
-        </ul>
+          <ul className="filter-card">
+            {bookshelvesList.map(eachItem => (
+              <FilterGroup
+                key={eachItem.id}
+                itemObject={eachItem}
+                isActive={eachItem.value === filterOption}
+                onLabel={this.onLabel}
+              />
+            ))}
+          </ul>
+        </div>
         <div className="all-book-main-card">
           <div className="book-status-card">
             <h1 className="book-status-heading">{booksStatus} Books</h1>
-            <div className="search-card">
-              <input
-                placeholder="Search"
-                type="search"
-                id="search-id"
-                className="search-input"
-                value={searchText}
-                onChange={this.onChangeOfSearchText}
-              />
-              <button
-                type="button"
-                className="search-button"
-                onClick={this.onClickOfSearchButton}
-                testid="searchButton"
-              >
-                <BsSearch className="search-icon" />
-              </button>
-            </div>
+            {innerWidth >= 768 && responsiveCard}
           </div>
           {allBooksList.length > 0 && (
             <ul className="all-books-card">
@@ -182,7 +186,7 @@ class Bookshelves extends Component {
           {apiStatus === apiConstants.success && allBooksList.length > 0 && (
             <Footer />
           )}
-          {allBooksList.length === 0 && apiStatus !== apiConstants.failure && (
+          {allBooksList.length === 0 && apiStatus === apiConstants.success && (
             <div className="no-search-card">
               <img
                 src="https://res.cloudinary.com/duws9fktk/image/upload/v1687236834/Mini-Project/no-search-img/Group_ux4ik4.png"

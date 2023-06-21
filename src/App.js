@@ -19,17 +19,23 @@ class App extends Component {
   }
 
   onClickOfNavHome = () => {
-    this.setState(prevState => ({
-      activeHome: !prevState.activeHome,
-      activeBooks: false,
-    }))
+    const {activeHome} = this.state
+    if (activeHome === false) {
+      this.setState(prevState => ({
+        activeHome: !prevState.activeHome,
+        activeBooks: false,
+      }))
+    }
   }
 
   onClickOfNavBooks = () => {
-    this.setState(prevState => ({
-      activeHome: false,
-      activeBooks: !prevState.activeBooks,
-    }))
+    const {activeBooks} = this.state
+    if (activeBooks === false) {
+      this.setState(prevState => ({
+        activeHome: false,
+        activeBooks: !prevState.activeBooks,
+      }))
+    }
   }
 
   render() {
