@@ -65,7 +65,7 @@
 .search-card {
   width: 50%;
   height: 30px;
-  display: none;
+  display: flex;
   justify-content: space-between;
   align-items: center;
   background: #ffffff;
@@ -164,7 +164,6 @@
   }
 
   .search-card {
-    display: flex;
     width: 70%;
   }
 
