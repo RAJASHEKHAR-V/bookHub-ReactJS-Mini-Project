@@ -73,8 +73,18 @@ class Home extends Component {
 
   getRatedList = () => {
     const {topRatedList, apiStatus, innerWidth} = this.state
-    const settings = {dots: false, slidesToShow: 4, slidesToScroll: 4}
-    const mobileSettings = {dots: false, slidesToShow: 2, slidesToScroll: 2}
+    const settings = {
+      dots: false,
+      slidesToShow: 4,
+      slidesToScroll: 4,
+      infinite: false,
+    }
+    const mobileSettings = {
+      dots: false,
+      slidesToShow: 2,
+      slidesToScroll: 2,
+      infinite: false,
+    }
     const AddSettings = innerWidth >= 768 ? settings : mobileSettings
     const {history} = this.props
     return (
