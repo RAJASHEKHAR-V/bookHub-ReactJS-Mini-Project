@@ -78,6 +78,9 @@
   color: #f8fafc;
   border: none;
 }
+.book-link {
+  text-decoration: none;
+}
 
 .each-rated-card {
   display: flex;

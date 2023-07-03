@@ -1,4 +1,5 @@
 import {Component} from 'react'
+import {Link} from 'react-router-dom'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
@@ -121,17 +122,25 @@ class Home extends Component {
                   <ul className="slick-container slick-item">
                     <Slider {...AddSettings}>
                       {topRatedList.map(eachBook => (
-                        <li key={eachBook.id} className="each-rated-card">
-                          <img
-                            src={eachBook.coverPic}
-                            className="rated-book-image"
-                            alt={eachBook.title}
-                          />
-                          <h1 className="rated-book-title">{eachBook.title}</h1>
-                          <p className="rated-book-author">
-                            {eachBook.authorName}
-                          </p>
-                        </li>
+                        <Link
+                          to={`/books/${eachBook.id}`}
+                          className="book-link"
+                          key={eachBook.id}
+                        >
+                          <li className="each-rated-card">
+                            <img
+                              src={eachBook.coverPic}
+                              className="rated-book-image"
+                              alt={eachBook.title}
+                            />
+                            <h1 className="rated-book-title">
+                              {eachBook.title}
+                            </h1>
+                            <p className="rated-book-author">
+                              {eachBook.authorName}
+                            </p>
+                          </li>
+                        </Link>
                       ))}
                     </Slider>
                   </ul>
